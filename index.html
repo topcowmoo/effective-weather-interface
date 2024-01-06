@@ -1,59 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Effective Weather Interface</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap"
+      rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+  </head>
+  <body>
     <h1>Weather Dashboard</h1>
-        <div class="container">
-            <h2>Search for a City:</h2>
-            <input class="city-input" type="text" placeholder="Miami">
-            <div class="break"></div>
-            <div class="search-btn-container">
-                <button class="search-btn">Search</button>
-                <div class="line"></div>
-            </div>
-            <div class="search-history">
-                <ul class="history-btns"></ul>
-            </div>
-        </div>
+    <div class="container">
+      <h2>Search for a City:</h2>
+      <input class="city-input" type="text" placeholder="Miami">
+      <div class="break"></div>
+      <div class="search-btn-container">
+        <button class="search-btn">Search</button>
+        <div class="line"></div>
+      </div>
+      <div class="search-history">
+        <ul class="history-btns"></ul>
+      </div>
 
-        <div class="weather-data">
-            <div class="current-weather">
-                <div class="results">
-                    <!-- <h2>()</h2>
+      <div class="weather-data">
+        <div class="current-weather">
+          <div class="results">
+            <!-- <h2>()</h2>
                     <h3>Temp:</h3>
                     <h3>Wind:</h3>
                     <h3>Humidity:</h3> -->
-                </div>
-            </div>    
-
-            
-
-
-
-
-                </div>
-
-
-
-
-            </div>
+          </div>
         </div>
 
-
-
-
-
-
-
-
+        <div class="five-day">
+          <h4>5-Day Forcast:</h4>
+          <ul class="forcast-cards">
+            <!-- <li class="cards">
+                        <h2>()</h2>
+                        <h3>Temp:</h3>
+                        <h3>Wind:</h3>
+                        <h3>Humidity:</h3>
+                    </li> -->
+          </ul>
+        </div>
+      </div>
+    </div>
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>
