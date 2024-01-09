@@ -65,7 +65,7 @@ function cityCoordinates() {
     const cityName = cityInput.value.trim();
     if (!cityName) return;
 
-    const geoCodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName},&appid=${apiKey}&limit=1`;
+    const geoCodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName},&appid=${apiKey}&limit=1`;
 
     fetch(geoCodingApiUrl)
         .then(res => res.json())
