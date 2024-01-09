@@ -15,36 +15,27 @@
     <div class="container">
         <div class="weather-search">
             <h2>Search for a City:</h2>
-            <input class="city-input" type="text" placeholder="Miami">
+            <input class="city-input" type="text" placeholder="Search...">
             <div class="break"></div>
             <div class="search-btn-container">
                 <button class="search-btn">Search</button>
                 <div class="line"></div>
             </div>
-            <div class="search-history"> <!--dom manipulation js-->
+            <div class="search-history">
                 <ul class="history-btns"></ul>
+                <button class="clear-history-button" onclick="clearHistory()">Clear History</button>
             </div>
         </div>
 
         <div class="weather-data">
             <div class="current-weather">
                 <div class="results">
-                    <!-- <h2>()</h2>
-                    <h3>Temp:</h3>
-                    <h3>Wind:</h3>
-                    <h3>Humidity:</h3> -->
                 </div> 
             </div>
 
             <div class="five-day">
                 <h4>5-Day Forecast:</h4>
-                <ul class="forecast-cards">
-                    <!-- <li class="cards">
-                        <h2>()</h2>
-                        <h3>Temp:</h3>
-                        <h3>Wind:</h3>
-                        <h3>Humidity:</h3>
-                    </li> -->
+                <ul id="forecastList" class="forecast-cards">
                 </ul>           
             </div>
         </div>
