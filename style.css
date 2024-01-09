@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    max-width: 1179px;
 }
 
 body, input {
@@ -15,6 +16,7 @@ h1 {
     margin-bottom: 10px;
     width: 100%;
     margin-top: 0%;
+    width: auto;
 }
 
 h2 {
@@ -30,17 +32,21 @@ h3 {
 
 h4 {
     font-size: 20px;
+    margin-bottom: 1px;
+    margin-left: 10px;
+    margin-top: 20px !important;
 }
 
-.search-btn {
+.search-btn, .clear-history-button {
     background-color:#127CAA;
     color: white;
     border-radius: 4px;
-    width: 285px;
+    width: 292px;
     padding: 5px;
     cursor: pointer;
     border: none;
     font-family: 'Noto Sans', sans-serif, arial, Arial, Helvetica;
+    padding: 8px;
 }
 
 .city-input {
@@ -48,7 +54,7 @@ h4 {
     color: black;
     padding: 8px;
     margin-bottom: 8px;
-    width: 267px;
+    width: 275px;
     border: 1px solid;
     font-size: 17px;
 }
@@ -62,13 +68,17 @@ h4 {
 
 .results {
     border: 1px solid black;
-    margin-left: 20px;
-    margin-right: 25px;
+    margin-left: 30px;
+    margin-right: 2px;
     padding: 8px;
+    width: auto;
+    background-color: #127CAA;
+    color: white;
 }
 
 .five-day {
     margin-left: 20px;
+    flex-wrap: wrap;
 }
 
 .weather-search {
@@ -84,4 +94,45 @@ h4 {
     bottom: 0;
     left: 0;
     margin-top: 1rem;
+}
+
+.five-day {
+    display: flex;
+    list-style: none;
+    padding: 0px;
+    margin-left: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.cards {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    max-width: 200px; 
+    display: inline-block; 
+    background-color: #127CAA;
+    color: white;
+}
+
+.search-history li {
+    cursor: pointer;
+    margin-bottom: 14px;
+    color: black;
+    list-style-type: none;
+    border-radius: 4px;
+    width: 285px;
+    padding: 5px;
+    padding-left: 2px;
+    text-align: center;
+    background-color: #A6A6A6;
+}
+
+.history-btns {
+    padding-inline-start: 0%;
+    width: 234px;
+}
+
+.forecast-cards {
+    padding: 0;
 }
