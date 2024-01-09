@@ -62,6 +62,32 @@ function cityCoordinates() {
         });
 }
 
+function getFiveDayForecast(name, lon, lat) {
+    const fiveDayForecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+    fetch(fiveDayForecastApiUrl)
+        .then(res => res.json())
+        .then(forecastData => {
+            console.log("5-day forecast data:", forecastData);
+
+            if (forecastData.list && forecastData.list.length > 0) {
+                const dailyForecasts = forecastData.list.filter(entry => entry.dt_txt.includes('12:00:00'));
+
+                if (dailyForecasts.length > 0) {
+                    console.log("Filtered 5-day forecast data:", dailyForecasts);
+                    printfiveDayForecast(name, dailyForecasts);
+                } else {
+                    console.error("No daily forecasts available for the next 5 days");
+                }
+            } else {
+                console.error("No forecast data available");
+            }
+        })
+        .catch((error) => {
+            console.error("Failed to fetch five-day forecast", error);
+        });
+}
+
 // Event listener for the click of the search button to call the city coordinate function
 if (!searchButton.onclick) {
     searchButton.onclick = () => {
