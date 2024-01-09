@@ -62,6 +62,42 @@ function cityCoordinates() {
         });
 }
 
+const forecastList = document.getElementById("forecastList");
+
+function printfiveDayForecast(cityName, dailyForecasts) {
+    if (!forecastList) {
+        console.error("Forecast list element not found");
+        return;
+    }
+
+    forecastList.innerHTML = '';
+    if (Array.isArray(dailyForecasts)) {
+        dailyForecasts.forEach(entry => {
+            const date = new Date(entry.dt * 1000);
+            const formattedDate = date.toLocaleDateString('en-US', {
+                month: 'numeric',
+                day: 'numeric',
+                year: 'numeric'
+            });
+
+            const listItem = document.createElement('li');
+            listItem.className = 'cards';
+            listItem.innerHTML =
+                `<div>
+                    <h3>${formattedDate}</h3>
+                    <img class="icon" src="https://openweathermap.org/img/wn/${entry.weather[0].icon}.png" alt="${entry.weather[0].description}">
+                    <h3>Temp: ${entry.main.temp.toFixed(0)} °C</h3>
+                    <h3>Wind: ${entry.wind.speed} km/h</h3>
+                    <h3>Humidity: ${entry.main.humidity} %</h3>
+                </div>`;
+
+            forecastList.appendChild(listItem);
+        });
+    } else {
+        console.error("Invalid daily forecast data format");
+    }
+}
+
 function getFiveDayForecast(name, lon, lat) {
     const fiveDayForecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
