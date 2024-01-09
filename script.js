@@ -6,6 +6,23 @@ const forcastCardDiv = document.querySelector(".forcast-cards");
 
 const apiKey = "329f03f3dd53cd0515673856c8dba1af";
 
+function getCurrentWeatherData(name, lon, lat) {
+    const currentWeatherDataApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+
+    fetch(currentWeatherDataApiUrl)
+        .then(res => res.json())
+        .then(currentData => {
+            console.log("current day weather data", currentData);
+            printCurrentWeatherCard(name, currentData);
+            addToHistory(name); // Add to history after displaying results
+        })
+        .catch((error) => {
+            console.error("failed to fetch current weather data", error);
+        });
+}
+
+
+
 function cityCoordinates() {
     const cityName = cityInput.value.trim();
     if (!cityName) return;
