@@ -39,6 +39,28 @@ function getCurrentWeatherData(name, lon, lat) {
         });
 }
 
+function addToHistory(cityName) {
+    const historyList = document.querySelector(".history-btns");
+
+    // Check if the city is already in the history
+    const existingCities = Array.from(historyList.children).map(li => li.textContent.trim());
+    
+    if (!existingCities.includes(cityName)) {
+        const listItem = document.createElement('li');
+        listItem.textContent = cityName;
+
+        listItem.addEventListener('click', function () {
+            // When history item is clicked, set the search input to that term
+            cityInput.value = cityName;  // Update the input value
+            setTimeout(() => {
+                cityCoordinates();  // Use setTimeout to ensure the input value is updated
+            }, 0);
+        });
+
+        historyList.appendChild(listItem);
+    }
+}
+
 function cityCoordinates() {
     const cityName = cityInput.value.trim();
     if (!cityName) return;
@@ -129,6 +151,11 @@ if (!searchButton.onclick) {
     searchButton.onclick = () => {
         cityCoordinates();
     };
+}
+
+function clearHistory() {
+    const historyList = document.querySelector(".history-btns");
+    historyList.innerHTML = '';
 }
 
 function search() {
