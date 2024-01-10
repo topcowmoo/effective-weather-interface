@@ -1,11 +1,14 @@
+// Activating HTML elements
 const searchButton = document.querySelector(".search-btn");
 const historyButtonContainer = document.querySelector(".history-btns");
 const cityInput = document.querySelector(".city-input");
 const currentWeatherDiv = document.querySelector(".current-weather");
 const forcastCardDiv = document.querySelector(".forcast-cards");
 
+// API key variable
 const apiKey = "329f03f3dd53cd0515673856c8dba1af";
 
+// Function to print current weather to page
 function printCurrentWeatherCard(cityName, weatherData) {
     const date = new Date(weatherData.dt * 1000);
     const formattedDate = new Intl.DateTimeFormat('en-US', {
@@ -24,6 +27,7 @@ function printCurrentWeatherCard(cityName, weatherData) {
         </div>`;
 }
 
+// Function to get current weather data for API
 function getCurrentWeatherData(name, lon, lat) {
     const currentWeatherDataApiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
@@ -39,27 +43,55 @@ function getCurrentWeatherData(name, lon, lat) {
         });
 }
 
+// Function to add history search list to 
 function addToHistory(cityName) {
     const historyList = document.querySelector(".history-btns");
+    let history = loadFromLocalStorage();
 
     // Check if the city is already in the history
-    const existingCities = Array.from(historyList.children).map(li => li.textContent.trim());
-    
+    const existingCities = history.map(entry => entry.trim());
+
     if (!existingCities.includes(cityName)) {
         const listItem = document.createElement('li');
         listItem.textContent = cityName;
 
         listItem.addEventListener('click', function () {
             // When history item is clicked, set the search input to that term
-            cityInput.value = cityName;  // Update the input value
+            cityInput.value = cityName;
             setTimeout(() => {
-                cityCoordinates();  // Use setTimeout to ensure the input value is updated
+                cityCoordinates();
             }, 0);
         });
 
         historyList.appendChild(listItem);
+
+        // Save only unique cities and the latest search to local storage
+        history = [cityName, ...history.filter(entry => entry !== cityName)];
+        saveToLocalStorage(history);
     }
 }
+
+
+// Load history from local storage on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const historyList = document.querySelector(".history-btns");
+    let history = loadFromLocalStorage();
+
+    history.forEach(cityName => {
+        const listItem = document.createElement('li');
+        listItem.textContent = cityName;
+
+        listItem.addEventListener('click', function () {
+            cityInput.value = cityName;
+            setTimeout(() => {
+                cityCoordinates();
+            }, 0);
+        });
+
+        historyList.appendChild(listItem);
+    });
+});
+
 
 function cityCoordinates() {
     const cityName = cityInput.value.trim();
@@ -82,7 +114,28 @@ function cityCoordinates() {
         .finally(() => {
                 cityInput.value = ''; // Only clear input if it was not set by clicking history
         });
+
 }
+
+// Load history from local storage on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const history = loadFromLocalStorage();
+    const historyList = document.querySelector(".history-btns");
+
+    history.forEach(cityName => {
+        const listItem = document.createElement('li');
+        listItem.textContent = cityName;
+
+        listItem.addEventListener('click', function () {
+            cityInput.value = cityName;
+            setTimeout(() => {
+                cityCoordinates();
+            }, 0);
+        });
+
+        historyList.appendChild(listItem);
+    });
+});
 
 const forecastList = document.getElementById("forecastList");
 
@@ -161,3 +214,27 @@ function clearHistory() {
 function search() {
     cityCoordinates();
 }
+
+// Function to save search history to local storage
+function saveToLocalStorage(history) {
+    localStorage.setItem('weatherHistory', JSON.stringify(history));
+}
+
+// Function to load search history from local storage
+function loadFromLocalStorage() {
+    const storedHistory = localStorage.getItem('weatherHistory');
+    return storedHistory ? JSON.parse(storedHistory) : [];
+}
+
+function loadLastSearchedCityWeather() {
+    const lastSearchedCity = loadFromLocalStorage()[0]; // Assuming you want to load the latest searched city
+    if (lastSearchedCity) {
+        cityInput.value = lastSearchedCity;
+        cityCoordinates();
+    }
+}
+
+// Call the function on page load
+document.addEventListener('DOMContentLoaded', () => {
+    loadLastSearchedCityWeather();
+});
