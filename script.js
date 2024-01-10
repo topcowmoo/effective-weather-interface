@@ -4,8 +4,6 @@ const historyButtonContainer = document.querySelector(".history-btns");
 const cityInput = document.querySelector(".city-input");
 const currentWeatherDiv = document.querySelector(".current-weather");
 const forcastCardDiv = document.querySelector(".forcast-cards");
-
-// API key variable
 const apiKey = "329f03f3dd53cd0515673856c8dba1af";
 
 // Function to print current weather to page
@@ -71,56 +69,13 @@ function addToHistory(cityName) {
     }
 }
 
-
 // Load history from local storage on page load
 document.addEventListener('DOMContentLoaded', () => {
     const historyList = document.querySelector(".history-btns");
-    let history = loadFromLocalStorage();
-
-    history.forEach(cityName => {
-        const listItem = document.createElement('li');
-        listItem.textContent = cityName;
-
-        listItem.addEventListener('click', function () {
-            cityInput.value = cityName;
-            setTimeout(() => {
-                cityCoordinates();
-            }, 0);
-        });
-
-        historyList.appendChild(listItem);
-    });
-});
-
-
-function cityCoordinates() {
-    const cityName = cityInput.value.trim();
-    if (!cityName) return;
-
-    const geoCodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName},&appid=${apiKey}&limit=1`;
-
-    fetch(geoCodingApiUrl)
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            const { name, lon, lat } = data[0];
-            getCurrentWeatherData(name, lon, lat);
-            getFiveDayForecast(name, lon, lat);
-            addToHistory(name);
-        })
-        .catch((error) => {
-            console.error("failed to fetch coordinates", error);
-        })
-        .finally(() => {
-                cityInput.value = ''; // Only clear input if it was not set by clicking history
-        });
-
-}
-
-// Load history from local storage on page load
-document.addEventListener('DOMContentLoaded', () => {
     const history = loadFromLocalStorage();
-    const historyList = document.querySelector(".history-btns");
+
+    // Clear existing history list
+    historyList.innerHTML = '';
 
     history.forEach(cityName => {
         const listItem = document.createElement('li');
@@ -135,6 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         historyList.appendChild(listItem);
     });
+
+    // Event listener for the click of the search button to call the city coordinate function
+    searchButton.onclick = () => {
+        cityCoordinates();
+    };
+
+    // Call the function to load the last searched city weather
+    loadLastSearchedCityWeather();
 });
 
 const forecastList = document.getElementById("forecastList");
@@ -199,11 +162,28 @@ function getFiveDayForecast(name, lon, lat) {
         });
 }
 
-// Event listener for the click of the search button to call the city coordinate function
-if (!searchButton.onclick) {
-    searchButton.onclick = () => {
-        cityCoordinates();
-    };
+function cityCoordinates() {
+    const cityName = cityInput.value.trim();
+    if (!cityName) return;
+
+    const geoCodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName},&appid=${apiKey}&limit=1`;
+
+    fetch(geoCodingApiUrl)
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            const { name, lon, lat } = data[0];
+            getCurrentWeatherData(name, lon, lat);
+            getFiveDayForecast(name, lon, lat);
+            addToHistory(name);
+        })
+        .catch((error) => {
+            console.error("failed to fetch coordinates", error);
+        })
+        .finally(() => {
+            cityInput.value = ''; // Only clear input if it was not set by clicking history
+        });
+
 }
 
 function clearHistory() {
