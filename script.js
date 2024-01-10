@@ -41,7 +41,7 @@ function getCurrentWeatherData(name, lon, lat) {
         });
 }
 
-// Function to add history search list to 
+// Function to add history search list to local storage
 function addToHistory(cityName) {
     const historyList = document.querySelector(".history-btns");
     let history = loadFromLocalStorage();
@@ -102,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const forecastList = document.getElementById("forecastList");
 
+// Function to print five day forecast data to page
 function printfiveDayForecast(cityName, dailyForecasts) {
     if (!forecastList) {
         console.error("Forecast list element not found");
@@ -136,6 +137,7 @@ function printfiveDayForecast(cityName, dailyForecasts) {
     }
 }
 
+// Function to obtain five day forecast data
 function getFiveDayForecast(name, lon, lat) {
     const fiveDayForecastApiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
 
@@ -162,6 +164,7 @@ function getFiveDayForecast(name, lon, lat) {
         });
 }
 
+// Function to create cityCoordinates
 function cityCoordinates() {
     const cityName = cityInput.value.trim();
     if (!cityName) return;
@@ -185,14 +188,10 @@ function cityCoordinates() {
         });
 
 }
-
+// Function to clear search history
 function clearHistory() {
     const historyList = document.querySelector(".history-btns");
     historyList.innerHTML = '';
-}
-
-function search() {
-    cityCoordinates();
 }
 
 // Function to save search history to local storage
@@ -206,8 +205,9 @@ function loadFromLocalStorage() {
     return storedHistory ? JSON.parse(storedHistory) : [];
 }
 
+// Function to load last searched city weather
 function loadLastSearchedCityWeather() {
-    const lastSearchedCity = loadFromLocalStorage()[0]; // Assuming you want to load the latest searched city
+    const lastSearchedCity = loadFromLocalStorage()[0];
     if (lastSearchedCity) {
         cityInput.value = lastSearchedCity;
         cityCoordinates();
@@ -218,3 +218,8 @@ function loadLastSearchedCityWeather() {
 document.addEventListener('DOMContentLoaded', () => {
     loadLastSearchedCityWeather();
 });
+
+// Call cityCoordinates function
+function search() {
+    cityCoordinates();
+}
