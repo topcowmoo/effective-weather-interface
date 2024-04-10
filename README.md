@@ -1,12 +1,3 @@
-
-
-
-comment javascript lines and htn=ml and css
-
-take out console.logs
-
-
-
 # Effective Weather Interface
 
 Welcome to my effective weather interface repo. I was tasked with creating a weather dashboard that allows a user to search for current and future weather forecasts. While searching for city names, the interface also saves the search history and dynamically displays on the page. It features HTML, CSS and JavaScript and is run in the browser. It also features the use of OpenWeather API. Thanks for stopping by.
