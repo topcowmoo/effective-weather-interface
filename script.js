@@ -214,6 +214,13 @@ function loadLastSearchedCityWeather() {
     }
 }
 
+// Event listener for the enter key to call the city coordinate function
+cityInput.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        cityCoordinates();
+    }
+});
+
 // Call the function on page load
 document.addEventListener('DOMContentLoaded', () => {
     loadLastSearchedCityWeather();
